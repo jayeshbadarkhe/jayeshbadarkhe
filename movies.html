@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies</title>
+    <style>
+      #search{
+        
+        margin-left: 45%;
+      }
+      #wallet{
+      margin-left: 90%;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <h1>Movie List</h1>
+      <!-- Display the wallet amount here inside h1 tag with id as "wallet". Note only amount, no extra text. Like 500 not Rs 500 -->
+      <h1 id="wallet">300</h1>
+    </div>
+    <div id="search_bar">
+      <!-- input box for searching movies with id as "search" -->
+      <input type="text" oninput='movies()' id="search" placeholder="Search Movies">
+      <!-- No button should be there for searching movies, it should search with input  -->
+    </div>
+
+    <div id="movies">
+      <!-- Append all searched movies here in grid format -->
+      <!-- Every movie card should have image, title and a book now button  -->
+      <!-- Book now buttons should have class "book_now"  -->
+    </div>
+  </body>
+</html>
+<script>
+  async function movies(){
+    try{
+      let title = document.getElementById("search").value;
+      let movieList = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=14695928&t=${title}`);
+      let data = await movieList.json();
+      shoWdata(data)
+    }
+    catch(err){
+      console.log(err);
+    }
+   
+  }
+
+  function shoWdata(obj){
+
+   let preData = document.getElementById("movies");
+   preData.innerHTML = "";
+
+    let poster = document.createElement("img");
+    poster.src = obj.Poster;
+
+    let title = document.createElement("h1");
+    title.textContent = obj.Title;
+
+    let book =document.createElement("button");
+    book.textContent = "Book Now";
+    book.className = "book_now";
+    book.addEventListener("click",function (){
+      localStorage.setItem("movie",JSON.stringify(obj));
+      window.location = "checkout.html"
+    })
+
+    let movieList = document.getElementById("movies");
+    movieList.append(poster,title,book)
+  }
+</script>
