@@ -38,21 +38,6 @@
     </div>
   </body>
 </html>
-<script>
-    // let list = document.getElementById("movie");
-    let data = JSON.parse(localStorage.getItem("movie"));
-    console.log(data)
+<script src="./scripts/checkout.js"></script>
 
-    let poster = document.createElement("img");
-    poster.src = data.Poster;
 
-    let title = document.createElement("h1");
-    title.textContent = data.Title;
-
-    let movieList = document.getElementById("movie");
-    movieList.append(title,poster)
-
-  function confirm(){
-    
-  }
-</script>
